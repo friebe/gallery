@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <script>
+        function logImageClick(imagePath) {
+            console.log("Image clicked:", imagePath);
+        }
+    </script>
+    <style>
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: auto;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Gallery</h1>
+    {{range $year, $months := .Images}}
+    <h2>{{ $year }}</h2>
+    {{range $month, $images := $months}}
+    <h3>{{ $month }}</h3>
+    <div class="gallery">
+        {{range $images}}
+        <img src="{{.Path}}" alt="Image" loading="lazy">
+        {{end}}
+    </div>
+    {{end}}
+    {{end}}
+</body>
+
+</html>
+`
