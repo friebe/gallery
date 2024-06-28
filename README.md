@@ -38,7 +38,12 @@ go mod tidy
 
 3. Build the project:
 ```
-go build -o bin/webgallery ./cmd/webgallery
+go build -o bin/webgallery ./cmd/webgallery/main.go
+```
+
+3. Build the project for raspberry pi w zero:
+```
+GOARCH=arm GOARM=6 GOOS=linux go build -o bin/webgallery ./cmd/webgallery/main.go
 ```
 
 4. Copy the necessary files to the target machine:

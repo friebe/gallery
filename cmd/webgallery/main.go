@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"webgallery/internal/gallery"
+
+	"github.com/friebe/webgallery/internal/gallery"
 )
 
 const imageDir = "static/images"
