@@ -5,11 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery</title>
-    <script>
-        function logImageClick(imagePath) {
-            console.log("Image clicked:", imagePath);
-        }
-    </script>
     <style>
         .gallery {
             display: flex;
@@ -32,7 +27,7 @@
     <h3>{{ $month }}</h3>
     <div class="gallery">
         {{range $images}}
-        <img src="{{.Path}}" alt="Image" loading="lazy">
+        <img src="/resize?path={{.Path}}" alt="Image" loading="lazy">
         {{end}}
     </div>
     {{end}}
@@ -40,4 +35,3 @@
 </body>
 
 </html>
-`
