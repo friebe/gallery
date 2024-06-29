@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/h2non/bimg"
+	"github.com/disintegration/imaging"
 )
 
 // GalleryHandler lädt die Bilder und rendert die Galerie-Seite.
@@ -31,24 +31,29 @@ func ResizeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, err := os.ReadFile(imagePath)
+	// Prüfe, ob die Datei existiert
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		http.Error(w, "Image not found", http.StatusNotFound)
+		return
+	}
+
+	// Lade das Bild
+	img, err := imaging.Open(imagePath)
 	if err != nil {
 		http.Error(w, "Unable to read image", http.StatusInternalServerError)
 		return
 	}
 
-	options := bimg.Options{
-		Width:  100,
-		Height: 100,
-		Crop:   true,
-	}
+	// Skalieren des Bildes
+	resizedImg := imaging.Resize(img, 100, 100, imaging.Lanczos)
 
-	newImage, err := bimg.NewImage(file).Process(options)
+	// Setze den Content-Type Header
+	w.Header().Set("Content-Type", "image/jpeg")
+
+	// Sende das verkleinerte Bild an den Client
+	err = imaging.Encode(w, resizedImg, imaging.JPEG)
 	if err != nil {
-		http.Error(w, "Unable to process image", http.StatusInternalServerError)
+		http.Error(w, "Unable to encode image", http.StatusInternalServerError)
 		return
 	}
-
-	w.Header().Set("Content-Type", "image/jpeg")
-	w.Write(newImage)
 }

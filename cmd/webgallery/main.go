@@ -7,7 +7,7 @@ import (
 	"github.com/friebe/webgallery/internal/gallery"
 )
 
-const imageDir = "static/images"
+const imageDir = "/mnt/external"
 
 func main() {
 	http.HandleFunc("/", gallery.GalleryHandler(imageDir))

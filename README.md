@@ -5,22 +5,13 @@ Web Gallery is a simple Go web application that serves images from a mounted dir
 ## Features
 
 - Serves images from a specified directory.
-- Resizes images on the fly using bimg.
+- Resizes images on the fly using [imaging](https://github.com/disintegration/imaging).
 - Organizes images by year and month.
 - Uses HTML templates to render the gallery.
+- Uses lazy loading attribut for images in frontend
 
 ## Requirements
 - Go 1.16 or later
-- pkg-config and libvips-dev for building the project
-- libvips for running the project
-
-# Installation
-Before building the project, you need to install pkg-config and libvips-dev on your development machine.
-
-```
-sudo apt update
-sudo apt install -y pkg-config libvips-dev
-```
 
 # Building the Project
 
@@ -79,6 +70,10 @@ webgallery/
 └── go.sum
 ```
 
+## Configuration
+The application expects images to be in a directory mounted at */mnt/external.*
+You can also change the path and the server port in main.go:
+
 ## Folder Pattern for Storing Images
 The application expects images to be stored in a specific folder pattern within the mounted directory. The pattern should be year/month/image. For example:
 
@@ -100,12 +95,8 @@ The application expects images to be stored in a specific folder pattern within 
         ├── image8.jpg
 ```
 
-## Configuration
-The application expects images to be in a directory mounted at */mnt/external.*
-
-You can change this path and the server port in main.go:
 
 ```go
-const imageDir = "/mnt/external" // Path to the mounted directory
+const imageDir = "/mnt/external" // Path to the mounted directory or ./static/images to serve local example images
 const port = 8080
 ```
